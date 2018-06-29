@@ -1,0 +1,8 @@
+black
+Flask
+flask-konch
+Flask-Migrate
+Flask-SQLAlchemy
+flask-marshmallow
+gunicorn
+psycopg2

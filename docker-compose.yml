@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:10.3-alpine
+    environment:
+      POSTGRES_DB: sivdev
+      POSTGRES_USER: sivpack
+      POSTGRES_PASSWORD: sivpack_dev
+    ports:
+      - "9432:5432"
+  app:
+    build:
+      context: .
+    command: ["gunicorn", "app:app", "-b", "0.0.0.0:5000", "--reload", "--timeout",  "100000"]
+    depends_on:
+      - db
+    environment:
+      - FLASK_APP=app/__init__.py
+    volumes:
+      - .:/home/app/
+
