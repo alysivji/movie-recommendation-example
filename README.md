@@ -1,6 +1,6 @@
-# Movie Example
+# Movie Recommendation Website Example
 
-This is an example project.
+This is an example project showing my opinions on testing best practices.
 
 ## Todo
 

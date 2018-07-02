@@ -51,7 +51,7 @@ shell_flask:
 	docker-compose exec app flask konch
 
 migration: up ## Create migrations using flask migrate
-	docker-compose exec app flask db migrate -m "$(m)" --directory /home/app/migrations/
+	docker-compose exec app flask db migrate -m "$(m)"
 
 migrate: up ## Run migrations using flask migrate
 	docker-compose exec app flask db upgrade

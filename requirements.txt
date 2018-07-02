@@ -5,4 +5,5 @@ Flask-Migrate
 Flask-SQLAlchemy
 flask-marshmallow
 gunicorn
-psycopg2
+marshmallow-sqlalchemy
+psycopg2-binary
