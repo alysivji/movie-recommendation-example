@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from marshmallow import (
     fields,
     post_dump,
@@ -10,6 +12,7 @@ from marshmallow import (
 
 from app.models import Movie
 
+CURRENT_YEAR = datetime.now().year
 
 class MovieSchema(Schema):
     # Fields
@@ -19,6 +22,10 @@ class MovieSchema(Schema):
     description = fields.Str(required=True)
 
     # Validators
+    @validates
+    def validate_release_year(self, data):
+        if data > CURRENT_YEAR:
+            raise ValidationError("Cannot insert unrelease movie")
 
     # Loaders
     @post_load
@@ -26,5 +33,5 @@ class MovieSchema(Schema):
         return Movie(**data)
 
 
-movie_list_schema = MovieSchema(many=True)
-movie_post_schema = MovieSchema()
+movies_list_schema = MovieSchema(many=True)
+movies_post_schema = MovieSchema()

@@ -3,7 +3,7 @@ from flask.views import View
 
 from app import db
 from app.models import Movie
-from app.schemas.movies import movie_list_schema, movie_post_schema
+from app.schemas.movies import movies_list_schema, movies_post_schema
 
 
 class MoviesList(View):
@@ -11,7 +11,7 @@ class MoviesList(View):
 
     def dispatch_request(self):
         movies = Movie.query.all()
-        result = movie_list_schema.dumps(movies)
+        result = movies_list_schema.dumps(movies)
         return result.data
 
 
@@ -20,10 +20,10 @@ class CreateMovie(View):
 
     def dispatch_request(self):
         movie_data = request.json.copy()
-        result = movie_post_schema.load(movie_data)
+        result = movies_post_schema.load(movie_data)
         movie = result.data
 
         db.session.add(movie)
         db.session.commit()
 
-        return movie_post_schema.dumps(movie)
+        return movies_post_schema.dumps(movie)
