@@ -12,16 +12,31 @@ CURRENT_YEAR = datetime.now().year
     release_year=st.integers(max_value=CURRENT_YEAR),
     description=st.text(),
 )
-def test_movie_post_schema(title, release_year, description):
-    record = {
-        "title": title,
-        "release_year": release_year,
-        "description": description,
-    }
+def test_movie_post_schema(movie_factory, title, release_year, description):
+    """Test Happy Path"""
+    # Arrange
+    record = movie_factory(title=title, release_year=release_year, description=description)
 
+    # Act
     result = movies_post_schema.load(record)
-    movie = result.data
 
+    # Assert
+    assert len(result.errors) == 0
+
+    movie = result.data
     assert movie.title == title
     assert movie.release_year == release_year
     assert movie.description == description
+
+
+@given(
+    release_year=st.integers(min_value=CURRENT_YEAR + 1),
+)
+def test_movie_after_current_year_raises_error(movie_factory, release_year):
+    """Test inserting movie after current year"""
+    record = movie_factory(release_year=release_year)
+
+    result = movies_post_schema.load(record)
+
+    assert len(result.errors) == 1
+    assert 'release_year' in result.errors

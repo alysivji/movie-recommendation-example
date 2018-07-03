@@ -14,6 +14,7 @@ from app.models import Movie
 
 CURRENT_YEAR = datetime.now().year
 
+
 class MovieSchema(Schema):
     # Fields
     id = fields.Str(dump_only=True)
@@ -22,7 +23,7 @@ class MovieSchema(Schema):
     description = fields.Str(required=True)
 
     # Validators
-    @validates
+    @validates('release_year')
     def validate_release_year(self, data):
         if data > CURRENT_YEAR:
             raise ValidationError("Cannot insert unrelease movie")
