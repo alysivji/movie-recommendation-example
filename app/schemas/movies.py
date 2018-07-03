@@ -23,7 +23,7 @@ class MovieSchema(Schema):
     description = fields.Str(required=True)
 
     # Validators
-    @validates('release_year')
+    @validates("release_year")
     def validate_release_year(self, data):
         if data > CURRENT_YEAR:
             raise ValidationError("Cannot insert unrelease movie")

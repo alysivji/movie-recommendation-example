@@ -25,6 +25,7 @@ class User(BaseModel):
     """
     User table
     """
+
     # Attributes
     email = db.Column(db.String(255), index=True, unique=True)
     first_name = db.Column(db.String(255))
@@ -41,6 +42,7 @@ class Movie(BaseModel):
     """
     Movies Details Table
     """
+
     def __repr__(self):
         return f"<Movie: {self.title}>"
 
@@ -57,10 +59,15 @@ class Rating(BaseModel):
     """
     Movie Ratings for user
     """
+
     # Attributes
-    movie_id = db.Column(db.Integer(), db.ForeignKey("movie.id", name="fk_rating_movie_id"))
+    movie_id = db.Column(
+        db.Integer(), db.ForeignKey("movie.id", name="fk_rating_movie_id")
+    )
     rating = db.Column(db.Integer())
-    user_id = db.Column(db.Integer(), db.ForeignKey("user.id", name="fk_rating_user_id"))
+    user_id = db.Column(
+        db.Integer(), db.ForeignKey("user.id", name="fk_rating_user_id")
+    )
 
     # Relationships
     movie = db.relationship("Movie", back_populates="ratings")

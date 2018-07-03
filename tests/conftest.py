@@ -22,4 +22,5 @@ def movie_factory():
             if key in record:
                 record[key] = value
         return record
+
     return _create_movie

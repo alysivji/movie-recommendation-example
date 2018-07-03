@@ -1,12 +1,6 @@
 from app import app
 
-from .resources import (
-    HealthCheck,
-    UsersList,
-    CreateUser,
-    MoviesList,
-    CreateMovie
-)
+from .resources import HealthCheck, UsersList, CreateUser, MoviesList, CreateMovie
 
 
 app.add_url_rule("/health-check", view_func=HealthCheck.as_view("health_check"))

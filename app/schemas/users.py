@@ -21,12 +21,12 @@ class UserListSchema(Schema):
     # Validators
     def validate_page(self, data):
         if data < 1:
-            raise ValidationError('Expecting page to be larger than 0')
+            raise ValidationError("Expecting page to be larger than 0")
 
-    @validates('limit')
+    @validates("limit")
     def validate_limit(self, data):
         if data < 1 or data > 100:
-            raise ValidationError('Expecting limit to be between 1-100')
+            raise ValidationError("Expecting limit to be between 1-100")
 
     # Loaders
     @post_dump
