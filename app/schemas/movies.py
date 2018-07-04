@@ -1,18 +1,7 @@
-from datetime import datetime
+from marshmallow import fields, post_load, Schema, validates, ValidationError
 
-from marshmallow import (
-    fields,
-    post_dump,
-    post_load,
-    Schema,
-    validates,
-    validates_schema,
-    ValidationError,
-)
-
+from app.constants import CURRENT_YEAR
 from app.models import Movie
-
-CURRENT_YEAR = datetime.now().year
 
 
 class MovieSchema(Schema):

@@ -1,18 +1,20 @@
-from datetime import datetime
-
-from app.schemas.movies import movies_post_schema
-
 from hypothesis import given, strategies as st
 
-CURRENT_YEAR = datetime.now().year
+from app.constants import CURRENT_YEAR
+from app.schemas.movies import movies_post_schema
 
 
+#################
+# Deserialization
+#################
 @given(
     title=st.text(),
     release_year=st.integers(max_value=CURRENT_YEAR),
     description=st.text(),
 )
-def test_movie_post_schema(movie_factory, title, release_year, description):
+def test_post_schema_creating_new_movie(
+    movie_factory, title, release_year, description
+):
     """Test Happy Path"""
     # Arrange
     record = movie_factory(
@@ -32,7 +34,9 @@ def test_movie_post_schema(movie_factory, title, release_year, description):
 
 
 @given(release_year=st.integers(min_value=CURRENT_YEAR + 1))
-def test_movie_after_current_year_raises_error(movie_factory, release_year):
+def test_post_schema_error_creating_movie_after_current_year(
+    movie_factory, release_year
+):
     """Test inserting movie after current year"""
     record = movie_factory(release_year=release_year)
 
@@ -40,3 +44,8 @@ def test_movie_after_current_year_raises_error(movie_factory, release_year):
 
     assert len(result.errors) == 1
     assert "release_year" in result.errors
+
+
+###############
+# Serialization
+###############
