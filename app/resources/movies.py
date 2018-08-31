@@ -12,8 +12,7 @@ class MoviesList(View):
 
     def dispatch_request(self):
         movies = db.query(Movie).all()
-        result = serialize_response(movies_list_schema, movies)
-        return result
+        return serialize_response(movies_list_schema, movies)
 
 
 class CreateMovie(View):
@@ -27,5 +26,4 @@ class CreateMovie(View):
         db.session.commit()
 
         serialized_result = serialize_response(movies_post_schema, movie)
-        movies_post_schema.dumps(movie)
         return send_response(200, data=serialized_result)

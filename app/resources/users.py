@@ -4,15 +4,15 @@ from flask.views import View
 from app import db
 from app.models import User
 from app.schemas.users import user_list_schema, user_post_schema
+from app.utilities import deserialize_request, send_response, serialize_response
 
 
 class UsersList(View):
     methods = ["GET"]
 
     def dispatch_request(self):
-        users = User.query.all()
-        result = user_list_schema.dumps(users)
-        return result.data
+        users = db.query(User).all()
+        return serialize_response(user_list_schema, users)
 
 
 class CreateUser(View):
@@ -20,10 +20,10 @@ class CreateUser(View):
 
     def dispatch_request(self):
         user_data = request.json.copy()
-        result = user_post_schema.load(user_data)
-        user = result.data
+        user = deserialize_request(user_post_schema, user_data)
 
         db.session.add(user)
         db.session.commit()
 
-        return user_post_schema.dumps(user)
+        serialized_result = serialize_response(user_post_schema, user)
+        return send_response(200, data=serialized_result)

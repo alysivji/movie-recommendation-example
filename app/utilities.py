@@ -1,13 +1,10 @@
 import json
-import logging
 from typing import Union
 
-from flask import Response
+from flask import current_app as app, Response
 from marshmallow import ValidationError
 
 from .exceptions import SerializationError, DeserializationError
-
-logger = logging.getLogger(__name__)
 
 
 def send_response(
@@ -40,7 +37,7 @@ def deserialize_request(schema, data):
         deserialized_result = schema.load(data)
         return deserialized_result
     except ValidationError as exc:
-        logger.exception("Deserialization error", exc.messages)
+        app.logger.exception("Deserialization error", exc.messages)
         raise DeserializationError(payload=exc.messages)
 
 
@@ -50,5 +47,5 @@ def serialize_response(schema, data):
         serialized_result = schema.dumps(data)
         return serialized_result
     except ValidationError as exc:
-        logger.exception("Serialization error", exc.messages)
+        app.logger.exception("Serialization error", exc.messages)
         raise SerializationError(payload=exc.messages)
