@@ -1,4 +1,4 @@
-import logging
+import logging.config
 
 from flask import Flask
 from flask_migrate import Migrate

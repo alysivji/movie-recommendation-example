@@ -11,6 +11,7 @@ from marshmallow.validate import Email
 
 from app.constants import DEFAULT_PAGE_SIZE
 from app.models import User
+from app.utilities import generate_password_hash
 
 
 class UserListSchema(Schema):
@@ -48,6 +49,8 @@ class UserSchema(Schema):
     # Loaders
     @post_load
     def make_user(self, data):
+        if "password" in data:
+            data["password_hash"] = generate_password_hash(data.pop("password"))
         return User(**data)
 
 

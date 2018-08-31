@@ -1,3 +1,6 @@
+"""Collection of utility functions"""
+
+import hashlib
 import json
 from typing import Union
 
@@ -5,6 +8,30 @@ from flask import current_app as app, Response
 from marshmallow import ValidationError
 
 from .exceptions import SerializationError, DeserializationError
+
+
+def generate_password_hash(password):
+    return hashlib.md5(password.encode("utf-8")).hexdigest()
+
+
+def deserialize_request(schema, data):
+    """Wrapper for Marhsmallow's schema.loads"""
+    try:
+        deserialized_result = schema.load(data)
+        return deserialized_result
+    except ValidationError as exc:
+        app.logger.exception("Deserialization error", exc.messages)
+        raise DeserializationError(payload=exc.messages)
+
+
+def serialize_response(schema, data):
+    """Wrapper for Marhsmallow's schema.dumps"""
+    try:
+        serialized_result = schema.dumps(data)
+        return serialized_result
+    except ValidationError as exc:
+        app.logger.exception("Serialization error", exc.messages)
+        raise SerializationError(payload=exc.messages)
 
 
 def send_response(
@@ -29,23 +56,3 @@ def send_response(
         headers=headers,
         content_type="application/json",
     )
-
-
-def deserialize_request(schema, data):
-    """Wrapper for Marhsmallow's schema.loads"""
-    try:
-        deserialized_result = schema.load(data)
-        return deserialized_result
-    except ValidationError as exc:
-        app.logger.exception("Deserialization error", exc.messages)
-        raise DeserializationError(payload=exc.messages)
-
-
-def serialize_response(schema, data):
-    """Wrapper for Marhsmallow's schema.dumps"""
-    try:
-        serialized_result = schema.dumps(data)
-        return serialized_result
-    except ValidationError as exc:
-        app.logger.exception("Serialization error", exc.messages)
-        raise SerializationError(payload=exc.messages)
