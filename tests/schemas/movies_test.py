@@ -1,4 +1,6 @@
 from hypothesis import given, strategies as st
+from marshmallow import ValidationError
+import pytest
 
 from app.constants import CURRENT_YEAR
 from app.schemas.movies import movies_post_schema
@@ -22,12 +24,9 @@ def test_post_schema_creating_new_movie(
     )
 
     # Act
-    result = movies_post_schema.load(record)
+    movie = movies_post_schema.load(record)
 
     # Assert
-    assert len(result.errors) == 0
-
-    movie = result.data
     assert movie.title == title
     assert movie.release_year == release_year
     assert movie.description == description
@@ -40,10 +39,10 @@ def test_post_schema_error_creating_movie_after_current_year(
     """Test inserting movie after current year"""
     record = movie_factory(release_year=release_year)
 
-    result = movies_post_schema.load(record)
-
-    assert len(result.errors) == 1
-    assert "release_year" in result.errors
+    with pytest.raises(ValidationError) as exc:
+        movies_post_schema.load(record)
+        assert len(exc.errors) == 1
+        assert "release_year" in exc.messages
 
 
 ######################
