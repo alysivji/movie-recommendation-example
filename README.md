@@ -2,12 +2,10 @@
 
 This is an example project showing my opinions on testing best practices.
 
-## Todo
+## Installation Instructions
 
-### Long Term
+Docker Compose
 
-- [ ] EXPLAIN Query so we can be sure our indexes are set properly
-- [ ] Swagger docs
-- [ ] How to fit hypothesis when creating objects... where to extrapolate this? something something dependency injection.
-- [ ] pgtap tests for database
-- [ ] tavern testing API
+make up
+make migrate
+make test
