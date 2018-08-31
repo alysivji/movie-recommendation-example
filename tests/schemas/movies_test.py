@@ -4,9 +4,9 @@ from app.constants import CURRENT_YEAR
 from app.schemas.movies import movies_post_schema
 
 
-#################
-# Deserialization
-#################
+########################
+# Deserialization / Load
+########################
 @given(
     title=st.text(),
     release_year=st.integers(max_value=CURRENT_YEAR),
@@ -46,6 +46,6 @@ def test_post_schema_error_creating_movie_after_current_year(
     assert "release_year" in result.errors
 
 
-###############
-# Serialization
-###############
+######################
+# Serialization / Dump
+######################

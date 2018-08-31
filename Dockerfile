@@ -1,7 +1,8 @@
-FROM python:3.7-rc
+FROM python:3.7.0-slim-stretch
 
-LABEL maintainer="Aly Sivji <alysivji@gmail.com>" \
-      description="Development image for SivDev"
+LABEL \
+    maintainer="Aly Sivji <alysivji@gmail.com>" \
+    description="Development image for SivDev"
 
 WORKDIR /home/app/
 
