@@ -1,0 +1,30 @@
+test_name: test_post_success
+
+stages:
+  - name: create_movie
+    request:
+      url: "{host:s}/movies"
+      method: POST
+      json: &sample_movie
+        title: Title Unknown
+        release_year: 1999
+        description: Things happen over a few arcs and movie ends.
+    response:
+      status_code: 200
+      body:
+        <<: *sample_movie
+        id: !anyint
+
+---
+
+test_name: test_post_422_unprocessable_entity
+
+stages:
+  - name: create_movie
+    request:
+      url: "{host:s}/movies"
+      method: POST
+      json:
+        title: Title Unknown
+    response:
+      status_code: 422

@@ -6,7 +6,7 @@ from app.models import Movie
 
 class MovieSchema(Schema):
     # Fields
-    id = fields.Str(dump_only=True)
+    id = fields.Int(dump_only=True)
     title = fields.Str(required=True)
     release_year = fields.Int(required=True)
     description = fields.Str(required=True)

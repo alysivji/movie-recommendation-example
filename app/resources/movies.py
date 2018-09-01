@@ -15,7 +15,27 @@ class MoviesList(View):
         return serialize_response(movies_list_schema, movies)
 
 
-class CreateMovie(View):
+class MoviesPost(View):
+    """Movie Post View
+    ---
+    summary: Add new movie to database
+    tags:
+        - Movie
+    parameters:
+        - in: body
+            schema: MovieSchema
+    consumes:
+        - application/json
+    produces:
+        - application/json
+    responses:
+        201:
+            description: Movie created successfully
+            schema: MovieSchema
+        422:
+            description: Input body formatting issue
+    """
+
     methods = ["POST"]
 
     def dispatch_request(self, injected_data=None):

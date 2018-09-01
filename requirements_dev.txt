@@ -8,3 +8,4 @@ pre-commit
 pytest
 pytest-cov
 pytest-mock
+tavern==0.18.0

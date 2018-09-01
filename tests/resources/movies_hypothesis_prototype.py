@@ -5,7 +5,7 @@ import json
 
 from hypothesis import given, strategies as st
 
-from app.resources.movies import CreateMovie
+from app.resources.movies import MoviesPost
 from app import db
 
 # calculating constants
@@ -26,7 +26,7 @@ def test_post_success(movie_factory, title, release_year, description):
     db.session.begin_nested()
 
     # Act
-    create_movie_view = CreateMovie()
+    create_movie_view = MoviesPost()
     result = create_movie_view.dispatch_request(injected_data=record)
 
     # cleanup
@@ -49,7 +49,7 @@ def test_post_movie_after_current_year_error(movie_factory, release_year):
     record = movie_factory(release_year=release_year)
 
     # Act
-    create_movie_view = CreateMovie()
+    create_movie_view = MoviesPost()
     result = create_movie_view.dispatch_request(injected_data=record)
 
     # Assert

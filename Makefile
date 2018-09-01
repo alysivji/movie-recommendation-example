@@ -44,10 +44,10 @@ logs:
 shell: ## Shell into web container
 	docker-compose exec app bash
 
-shell_db: ## Shell into postgres process inside db container
+shell-db: ## Shell into postgres process inside db container
 	docker-compose exec db psql -w --username "sivpack" --dbname "sivdev"
 
-shell_flask:
+shell-flask:
 	docker-compose exec app flask konch
 
 migration: up ## Create migrations using flask migrate
@@ -56,19 +56,19 @@ migration: up ## Create migrations using flask migrate
 migrate: up ## Run migrations using flask migrate
 	docker-compose exec app flask db upgrade
 
-migrate_back: up ## Rollback migrations using flask migrate
+migrate-back: up ## Rollback migrations using flask migrate
 	docker-compose exec app flask db downgrade
 
 test: migrate
 	docker-compose exec app pytest
 
-test_cov: migrate
+test-cov: migrate
 	docker-compose exec app pytest --verbose --cov
 
-test_cov_view: migrate
+test-cov-view: migrate
 	docker-compose exec app pytest --cov --cov-report html && open ./htmlcov/index.html
 
-test_fast: ## Can pass in parameters using p=''
+test-fast: ## Can pass in parameters using p=''
 	docker-compose exec app pytest $(p)
 
 # Flake 8

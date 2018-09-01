@@ -15,7 +15,7 @@ class UsersList(View):
         return serialize_response(user_list_schema, users)
 
 
-class CreateUser(View):
+class UsersPost(View):
     methods = ["POST"]
 
     def dispatch_request(self):
