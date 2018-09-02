@@ -6,4 +6,5 @@
 - [ ] Swagger docs
 - [ ] How to fit hypothesis when creating objects... where to extrapolate this? something something dependency injection.
 - [ ] pgtap tests for database
-- [ ] tavern testing API
+- [x] tavern testing API
+  - [ ] JSON schema validation

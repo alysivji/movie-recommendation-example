@@ -5,7 +5,13 @@ Implemented pattern described in Flask documentation
 """
 
 
-class DeserializationError(Exception):
+class AppException(Exception):
+    """Custom application level Exception"""
+
+    pass
+
+
+class DeserializationError(AppException):
     status_code = 422
 
     def __init__(self, payload):
@@ -17,7 +23,7 @@ class DeserializationError(Exception):
         return self.payload.copy()
 
 
-class SerializationError(Exception):
+class SerializationError(AppException):
     status_code = 500
 
     def __init__(self, payload):
