@@ -46,4 +46,4 @@ class MoviesPost(View):
         db.session.commit()
 
         serialized_result = serialize_response(movies_post_schema, movie)
-        return send_response(200, data=serialized_result)
+        return send_response(201, data=serialized_result)

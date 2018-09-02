@@ -26,4 +26,4 @@ class UsersPost(View):
         db.session.commit()
 
         serialized_result = serialize_response(user_post_schema, user)
-        return send_response(200, data=serialized_result)
+        return send_response(201, data=serialized_result)

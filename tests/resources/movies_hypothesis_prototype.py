@@ -33,7 +33,7 @@ def test_post_success(movie_factory, title, release_year, description):
     db.session.rollback()
 
     # Assert
-    assert result.status_code == 200
+    assert result.status_code == 201
     movie = json.loads(result.json)
 
     assert "errors" not in movie

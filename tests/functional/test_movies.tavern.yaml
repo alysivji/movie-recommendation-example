@@ -13,7 +13,7 @@ stages:
         release_year: 1999
         description: Things happen over a few arcs and movie ends.
     response:
-      status_code: 200
+      status_code: 201
       body:
         <<: *sample_movie
         id: !anyint
