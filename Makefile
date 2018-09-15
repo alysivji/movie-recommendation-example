@@ -24,10 +24,11 @@ build:
 	docker-compose build
 
 up:
-	docker-compose up -d app db
+	docker-compose up -d
+	make migrate-up
 
 start:
-	docker-compose start app db
+	docker-compose start
 
 stop:
 	docker-compose stop
@@ -50,22 +51,25 @@ shell-db: ## Shell into postgres process inside db container
 shell-flask:
 	docker-compose exec app flask konch
 
-migration: up ## Create migrations using flask migrate
+shell-root:  # Shell into web container as root
+	docker-compose exec -u root app bash
+
+migration: ## Create migrations using flask migrate
 	docker-compose exec app flask db migrate -m "$(m)"
 
-migrate: up ## Run migrations using flask migrate
+migrate-up: ## Run migrations using flask migrate
 	docker-compose exec app flask db upgrade
 
-migrate-back: up ## Rollback migrations using flask migrate
+migrate-down: ## Rollback migrations using flask migrate
 	docker-compose exec app flask db downgrade
 
-test: migrate
+test: migrate-up
 	docker-compose exec app pytest
 
-test-cov: migrate
+test-cov: migrate-up
 	docker-compose exec app pytest --verbose --cov
 
-test-cov-view: migrate
+test-cov-view: migrate-up
 	docker-compose exec app pytest --cov --cov-report html && open ./htmlcov/index.html
 
 test-fast: ## Can pass in parameters using p=''

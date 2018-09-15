@@ -4,10 +4,10 @@ LABEL \
     maintainer="Aly Sivji <alysivji@gmail.com>" \
     description="Development image for SivDev"
 
-WORKDIR /home/app/
+WORKDIR /app/
 
 COPY requirements.txt requirements_dev.txt /tmp/
-COPY . /home/app
+COPY . /app
 
 RUN groupadd -g 901 -r sivdev && \
     useradd -g sivdev -r -u 901 sivpack && \

@@ -3,6 +3,7 @@ import logging.config
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_talisman import Talisman
 
 from .config import Config
 from .exceptions import DeserializationError, SerializationError
@@ -17,6 +18,7 @@ logging.config.dictConfig(app.config.get("LOGGING_CONFIG"))
 # set up plugins
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+Talisman(app)
 
 from .models import User  # noqa
 from . import routes  # noqa

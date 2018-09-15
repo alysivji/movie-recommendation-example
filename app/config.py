@@ -2,7 +2,7 @@ import os
 
 
 class Config(object):
-    IN_PRODUCTION = os.getenv("PRODUCTION_VAR", False)
+    IN_PRODUCTION = os.getenv("FLASK_ENV", "development") == "production"
 
     SECRET_KEY = os.getenv("SECRET_KEY", "you-will-never-guess")
 
