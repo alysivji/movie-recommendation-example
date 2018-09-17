@@ -1,6 +1,7 @@
 import logging.config
 
 from flask import Flask
+from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_talisman import Talisman
@@ -18,6 +19,7 @@ logging.config.dictConfig(app.config.get("LOGGING_CONFIG"))
 # set up plugins
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+bcrypt = Bcrypt(app)
 Talisman(app)
 
 from .models import User  # noqa

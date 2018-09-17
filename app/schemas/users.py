@@ -1,17 +1,9 @@
-from marshmallow import (
-    fields,
-    post_dump,
-    post_load,
-    Schema,
-    validates,
-    validates_schema,
-    ValidationError,
-)
+from marshmallow import fields, post_dump, post_load, Schema, validates, ValidationError
 from marshmallow.validate import Email
 
+from app import bcrypt
 from app.constants import DEFAULT_PAGE_SIZE
 from app.models import User
-from app.utilities import generate_password_hash
 
 
 class UserListSchema(Schema):
@@ -50,7 +42,7 @@ class UserSchema(Schema):
     @post_load
     def make_user(self, data):
         if "password" in data:
-            data["password_hash"] = generate_password_hash(data.pop("password"))
+            data["password_hash"] = bcrypt.generate_password_hash(data.pop("password"))
         return User(**data)
 
 

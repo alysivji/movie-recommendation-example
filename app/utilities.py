@@ -1,6 +1,5 @@
 """Collection of utility functions"""
 
-import hashlib
 import json
 from typing import Union
 
@@ -8,10 +7,6 @@ from flask import current_app as app, Response
 from marshmallow import ValidationError
 
 from .exceptions import SerializationError, DeserializationError
-
-
-def generate_password_hash(password):
-    return hashlib.md5(password.encode("utf-8")).hexdigest()
 
 
 def deserialize_request(schema, data):
